@@ -1,0 +1,36 @@
+// brew install graphviz
+// dot -Tjpg gg.dot -o x.jpg
+
+digraph {
+
+    rankdir=LR;
+
+    subgraph wg_1 {
+        input_1 -> { w_1 w_2 w_3 } -> output_1 -> {w_4 w_5} -> blackhole;
+    }
+
+    subgraph wg_2 {
+        input_2 -> dispatcher -> {d_in_1 d_in_2 d_in_3 };
+
+        d_in_1 -> w_6 -> d_out_1;
+        d_in_2 -> w_7 -> d_out_2;
+        d_in_3 -> w_8 -> d_out_3;
+
+        {d_out_1 d_out_2 d_out_3} -> coordinator -> output_2 -> {w_9 w_a} -> blackhole;
+    }
+
+
+/*
+ *     subgraph wg_1 {
+ *         w_1;
+ *         w_2;
+ *     }
+ * 
+ *     subgraph wg_2 {
+ *         w_4;
+ *         w_5;
+ *     }
+ */
+
+
+}
