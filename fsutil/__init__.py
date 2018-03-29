@@ -37,6 +37,11 @@ from .iostat import (
     iostat,
 )
 
+from .cmp import (
+    Entry,
+    LineDiff,
+)
+
 __all__ = [
     "FSUtilError",
     "NotMountPoint",
@@ -70,4 +75,8 @@ __all__ = [
     "DeviceNotFound",
 
     "iostat",
+
+    "Entry", 
+    "LineDiff",
+
 ]
