@@ -121,7 +121,10 @@ class LineDiff(object):
             max_ts = 0
             unmatched_entries = []
 
+            # itr_sorted yield all element in order.
             itr_sorted = heapq.merge(*[self._pop_iter(x) for x in self.bufs])
+
+            # itr_same yield a list of equal element from itr_sorted.
             itr_same = self.get_same_entries(itr_sorted, n)
 
             while True:
