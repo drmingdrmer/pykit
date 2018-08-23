@@ -564,3 +564,30 @@ class TestLimitJobSpeed(unittest.TestCase):
         ])
 
         self.assertEqual(int(job_num / job_speed), int(time.time() - t0))
+
+class TestBenchJobq(unittest.TestCase):
+
+    def test_bench_jobq(self):
+        n_job = 1024 * 100
+
+        def _iter():
+            for ii in xrange(n_job):
+                yield ii
+
+        def empty(num):
+            pass
+
+        for n_thread in (100, 200, 400, 1000, 2000):
+
+            with ututil.Timer() as t:
+                jobq.run(_iter(), [
+                        (empty, n_thread),
+                ])
+
+                spent = t.spent()
+
+                print ('n_thread: {n_thread:>5}: us/job: {us:.2f} job/sec: {ps:.2f}'.format(
+                        n_thread=n_thread,
+                        us=spent*1000*1000/n_job,
+                        ps=n_job/spent,
+                ))
