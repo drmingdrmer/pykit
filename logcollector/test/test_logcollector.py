@@ -115,8 +115,7 @@ class TestLogcollector(unittest.TestCase):
 
         time.sleep(2)
 
-        self.assertEqual(3, len(log_entries))
-        dd(log_entries)
+        self.assertEqual(3, len(log_entries), 'log_entries are: ' + repr(log_entries))
 
         dd(log_entries[0]['count'])
         dd(log_entries[1]['count'])
