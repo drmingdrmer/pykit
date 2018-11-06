@@ -117,3 +117,19 @@ class TestTokenize(unittest.TestCase):
             rst = strutil.tokenize(line, sep=' ', quote=quote, preserve=preserve)
             dd('out: ', rst)
             self.assertEqual(rst, rst_expected)
+
+    def test_maxsplit(self):
+
+        cases = (
+            ('"ab cxd" efx gh',      '"',    False, None, ['ab cxd', 'efx', 'gh']),
+            ('"ab cxd" efx gh',      '"',    True,  None, ['"ab cxd"', 'efx', 'gh']),
+            ("'ab cxd' efx gh",      "'",    True,  None, ["'ab cxd'", 'efx', 'gh']),
+            ("'ab cxd' efx gh",      "'",    True,  1,    ["'ab cxd'", 'efx gh']),
+            ("'ab cxd' efx gh",      "'",    True,  0,    ["'ab cxd' efx gh"]),
+        )
+
+        for line, quote, preserve, maxsplit, rst_expected in cases:
+            dd('in: ', line, quote, preserve)
+            rst = strutil.tokenize(line, sep=' ', quote=quote, preserve=preserve, maxsplit=maxsplit)
+            dd('out: ', rst)
+            self.assertEqual(rst, rst_expected)
