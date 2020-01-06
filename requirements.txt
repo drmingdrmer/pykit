@@ -1,5 +1,5 @@
 # usage:
-#   pip2 install -r requirements.txt
+#   pip install -r requirements.txt
 
 
 # tool kits
@@ -33,23 +33,18 @@ pytz==2019.3
 docker-py==1.10.6
 
 
-# logutil
-# mysqlconnpool
-# p3json
-# proc
-# strutil
-subprocess32==3.5.4
-
-
-numpy==1.16.3
+# If fails building with python3.
+# Do not know why. no time to check. 2020 Jan 06 by xp
+numpy==1.18.1
 
 
 # zkutil
 kazoo==2.6.1
 
 
-# for building dependency graph
-snakefood
+## for building dependency graph
+# snakefood does not support python3
+#snakefood
 
 gevent==1.4.0
 redis==2.10.6
@@ -57,7 +52,14 @@ redis==2.10.6
 PyYAML==4.2b4
 
 # MySQLdb
-MySQL-python==1.2.5
+# MySQL-python==1.2.5
+
+# MySQL-python does not support python3.
+# People suggested this:
+# https://stackoverflow.com/questions/4960048/how-can-i-connect-to-mysql-in-python-3-on-windows?answertab=votes#tab-top
+#
+# Doc: https://pymysql.readthedocs.io/en/latest/
+PyMySQL==0.9.3
 objgraph==3.4.1
 
 # geventwebsocket
