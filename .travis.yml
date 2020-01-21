@@ -7,7 +7,7 @@ sudo: required
 
 jobs:
     include:
-        - python: "2.7"
+        - python: "3.7"
           install:
               - pip install -r requirements.txt
           script:
