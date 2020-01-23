@@ -104,6 +104,9 @@ class TestHumannum(unittest.TestCase):
             self.assertEqual(_out, rst, msg)
             self.assertEqual(0 - _out, humannum.parsenum('-' + _in), msg + ': negative')
 
+            # test bytes
+            self.assertEqual(_out, humannum.parsenum(bytes(_in, 'utf-8')), "string in bytes:" + msg)
+
             for suff in suffixes:
 
                 dd('parseint:', _in, ' suffix: ', suff)
@@ -168,7 +171,7 @@ class TestHumannum(unittest.TestCase):
 
             self.assertEqual(expected, rst)
 
-            if not isinstance(expected, types.StringTypes):
+            if not isinstance(expected, (str, bytes)):
                 rst = humannum.parseint(_in, safe=True)
                 self.assertEqual(int(expected), rst)
 
