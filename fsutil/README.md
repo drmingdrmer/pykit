@@ -508,7 +508,7 @@ having other issue like permission denied.
 ##  fsutil.read_file
 
 **syntax**:
-`fsutil.read_file(path)`
+`fsutil.read_file(path, mode='')`
 
 Read and return the entire file specified by `path`
 
@@ -516,6 +516,10 @@ Read and return the entire file specified by `path`
 
 -   `path`:
     is the file path to read.
+
+-   `mode`:
+    If `mode='b'` it returns `bytes`.
+    If `mode=''` it returns a `str` decoded from `bytes`.
 
 **return**:
 file content in string.

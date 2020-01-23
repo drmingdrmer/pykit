@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # coding: utf-8
 
 import os
@@ -16,7 +16,7 @@ dd = ututil.dd
 # xx/pykit/fsutil/test/
 this_base = os.path.dirname(__file__)
 
-pyt = 'python2'
+pyt = 'python'
 
 
 class TestFSUtil(unittest.TestCase):
@@ -85,7 +85,7 @@ class TestFSUtil(unittest.TestCase):
         root_dev = proc.shell_script(
             'mount | grep " on / " | grep -o "[^ ]*" | head -n1')[1].strip()
 
-        self.assertEqual(root_dev, rst)
+        self.assertEqual(root_dev.decode('utf-8'), rst)
 
     def test_get_device_fs(self):
 
@@ -94,10 +94,11 @@ class TestFSUtil(unittest.TestCase):
             'mount | grep " on / " | grep -o "[^ ]*" | head -n1')
         dd('find device on /', rc, out, err)
 
-        dev = out.strip()
+        dev = out.strip().decode('utf-8')
         dd('device: ', dev)
         rst = fsutil.get_device_fs(dev)
-        self.assertIn(rst, ('hfs', 'xfs', 'ext2', 'ext3', 'ext4'))
+        self.assertIn(rst, ('hfs', 'xfs', 'ext2', 'ext3', 'ext4',
+                            'apfs'))
 
     def test_get_path_fs(self):
 
@@ -108,7 +109,8 @@ class TestFSUtil(unittest.TestCase):
 
         rst = fsutil.get_path_fs('/blabla')
         dd('fs of /blabla: ', rst)
-        self.assertIn(rst, ('hfs', 'xfs', 'ext2', 'ext3', 'ext4'))
+        self.assertIn(rst, ('hfs', 'xfs', 'ext2', 'ext3', 'ext4',
+                            'apfs'))
 
     def test_get_path_usage(self):
 
@@ -191,15 +193,17 @@ class TestFSUtil(unittest.TestCase):
 
         dd('default mode')
         fsutil.makedirs(fn)
-        self.assertEqual(0755, get_mode(fn))
+        self.assertEqual(0o755, get_mode(fn))
         os.rmdir(fn)
 
         dd('specify mode')
-        fsutil.makedirs(fn, mode=0700)
-        self.assertEqual(0700, get_mode(fn))
+        fsutil.makedirs(fn, mode=0o700)
+        self.assertEqual(0o700, get_mode(fn))
         os.rmdir(fn)
 
         dd('specify uid/gid, to change uid, you need root privilege')
+        # dd('changing uid/gid works if it raises error')
+        # self.assertRaises(PermissionError, fsutil.makedirs, fn, uid=1, gid=1)
         fsutil.makedirs(fn, uid=1, gid=1)
 
     def test_get_sub_dirs(self):
@@ -236,13 +240,14 @@ class TestFSUtil(unittest.TestCase):
         force_remove(fn)
 
         rc, out, err = proc.shell_script(pyt + ' ' + this_base + '/makedirs_with_config.py ' + fn,
-                                         env=dict(PYTHONPATH=this_base + ':' + os.environ.get('PYTHONPATH'))
+                                         env=dict(PYTHONPATH=this_base + ':' + os.environ.get('PYTHONPATH'),
+                                                  PATH=os.environ.get('PATH'))
                                          )
 
         dd('run makedirs_with_config.py: ', rc, out, err)
 
         self.assertEqual(0, rc, 'normal exit')
-        self.assertEqual('2,3', out, 'uid,gid is defined in test/pykitconfig.py')
+        self.assertEqual(b'2,3', out, 'uid,gid is defined in test/pykitconfig.py')
 
     def test_read_write_file(self):
 
@@ -252,6 +257,8 @@ class TestFSUtil(unittest.TestCase):
         dd('write/read file')
         fsutil.write_file(fn, '123')
         self.assertEqual('123', fsutil.read_file(fn))
+
+        self.assertEqual(b'123', fsutil.read_file(fn, mode='b'))
 
         dd('write/read 3MB file')
         cont = '123' * (1024**2)
@@ -279,7 +286,7 @@ class TestFSUtil(unittest.TestCase):
         dd('run write_with_config.py: ', rc, out, err)
 
         self.assertEqual(0, rc, 'normal exit')
-        self.assertEqual('2,3', out, 'uid,gid is defined in test/pykitconfig.py')
+        self.assertEqual(b'2,3', out, 'uid,gid is defined in test/pykitconfig.py')
 
         force_remove(fn)
 
@@ -674,4 +681,4 @@ def force_remove(fn):
 def get_mode(fn):
     mode = os.stat(fn).st_mode
     dd('mode read:', oct(mode))
-    return mode & 0777
+    return mode & 0o777

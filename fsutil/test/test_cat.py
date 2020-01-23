@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # coding: utf-8
 
 import os
@@ -15,7 +15,7 @@ dd = ututil.dd
 # xx/pykit/fsutil/test/
 this_base = os.path.dirname(__file__)
 
-pyt = 'python2'
+pyt = 'python'
 
 
 class TestCat(unittest.TestCase):
@@ -150,7 +150,7 @@ class TestCat(unittest.TestCase):
         ]
         rst = []
 
-        for i in xrange(1, 11):
+        for i in range(1, 11):
             append_lines(self.fn, expected)
 
             for l in fsutil.Cat(self.fn, strip=True).iterate(timeout=0):
@@ -341,14 +341,14 @@ class TestCat(unittest.TestCase):
         a = fsutil.Cat(self.fn, strip=True).iterate(timeout=0.1)
         b = fsutil.Cat(self.fn, strip=True).iterate(timeout=0.1)
 
-        val = a.next()
+        val = next(a)
         self.assertEqual('x', val)
-        self.assertRaises(fsutil.LockTimeout, b.next)
+        self.assertRaises(fsutil.LockTimeout, lambda: next(b))
 
         # non-exclusive still work
         # a has not yet quit, thus it has not yet written offset to stat file.
         c = fsutil.Cat(self.fn, strip=True, exclusive=False).iterate(timeout=0.1)
-        val = c.next()
+        val = next(c)
         self.assertEqual('x', val)
 
     def test_handler(self):
@@ -461,8 +461,8 @@ class TestCat(unittest.TestCase):
         a = fsutil.Cat(self.fn, id='foo', strip=True).iterate(timeout=0)
         b = fsutil.Cat(self.fn, id='bar', strip=True).iterate(timeout=0)
 
-        self.assertEqual(expected[0], a.next())
-        self.assertEqual(expected[0], b.next())
+        self.assertEqual(expected[0], next(a))
+        self.assertEqual(expected[0], next(b))
 
     def test_config(self):
         expected = [

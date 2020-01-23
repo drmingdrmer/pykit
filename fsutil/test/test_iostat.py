@@ -110,7 +110,7 @@ class TestIostat(unittest.TestCase):
             rst = fsutil.iostat('/dev/sda1')
             dd(rst)
 
-            self.assertAlmostEqual(100, rst['ioutil'], delta=40)
+            self.assertAlmostEqual(100, rst['ioutil'], delta=50)
             self.assertGreaterEqual(t.spent(), 1.0)
 
         sess['running'] = False
@@ -140,7 +140,7 @@ class TestIostat(unittest.TestCase):
             self.assertGreaterEqual(t.spent(), 1.0)
 
         # should be able to read something.
-        fsutil.read_file(config.iostat_stat_path)
+        fsutil.read_file(config.iostat_stat_path, mode='b')
 
         force_remove(config.iostat_stat_path)
         config.iostat_stat_path = old

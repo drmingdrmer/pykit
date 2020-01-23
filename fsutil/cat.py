@@ -2,6 +2,7 @@
 # coding: utf-8
 
 
+import sys
 import errno
 import logging
 import os
@@ -11,9 +12,16 @@ import time
 import __main__
 from pykit import config
 from pykit import portlock
-from pykit import utfjson
+
 
 from . import fsutil
+
+_pyver = sys.version_info.major
+
+if _pyver == 2:
+    from pykit import p3json
+else:
+    import json as p3json
 
 logger = logging.getLogger(__name__)
 
@@ -272,7 +280,7 @@ class Cat(object):
 
         cont = fsutil.read_file(self.stat_path())
         if cont.startswith('{'):
-            return utfjson.load(cont)
+            return load(cont)
 
         # old format: TODO remove it
 
@@ -301,7 +309,7 @@ class Cat(object):
             "offset": offset,
         }
 
-        fsutil.write_file(self.stat_path(), utfjson.dump(last), fsync=False)
+        fsutil.write_file(self.stat_path(), dump(last), fsync=False)
 
         logger.info('position written fn=%s inode=%d offset=%d' % (
             self.fn, ino, offset))
@@ -418,3 +426,9 @@ class Cat(object):
 def _file_size(f):
     st = os.fstat(f.fileno())
     return st[stat.ST_SIZE]
+
+def dump(o):
+    return p3json.dumps(o, ensure_ascii=False)
+
+def load(s):
+    return p3json.loads(s)

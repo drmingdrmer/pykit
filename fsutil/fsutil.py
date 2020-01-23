@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # coding: utf-8
 
 import binascii
@@ -128,14 +128,15 @@ def get_path_inode_usage(path):
 
 
 def makedirs(*paths, **kwargs):
-    mode = kwargs.get('mode', 0755)
+    mode = kwargs.get('mode', 0o755)
     uid = kwargs.get('uid') or config.uid
     gid = kwargs.get('gid') or config.gid
 
     path = os.path.join(*paths)
+    last_err = None
 
     # retry to deal with concurrent check-and-then-set issue
-    for ii in range(2):
+    for _ in range(2):
 
         if os.path.isdir(path):
 
@@ -150,12 +151,13 @@ def makedirs(*paths, **kwargs):
                 os.chown(path, uid, gid)
         except OSError as e:
             if e.errno == errno.EEXIST:
+                last_err = e
                 # concurrent if-exist and makedirs
                 pass
             else:
                 raise
     else:
-        raise
+        raise last_err
 
 
 def get_sub_dirs(path):
@@ -187,8 +189,8 @@ def list_fns(path, pattern='.*'):
     return fns
 
 
-def read_file(path):
-    with open(path, 'r') as f:
+def read_file(path, mode=''):
+    with open(path, 'r' + mode) as f:
         return f.read()
 
 
@@ -303,7 +305,9 @@ def calc_checksums(path, sha1=False, md5=False, crc32=False, sha256=False,
             t0 = time.time()
 
             buf = f_path.read(block_size)
-            if buf == '':
+            # use len instead of compare to ''.
+            # in python3 it returns b''
+            if len(buf) == 0:
                 break
 
             t1 = time.time()
