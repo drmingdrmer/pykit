@@ -1,11 +1,18 @@
+import sys
+
 from .utfjson import (
     dump,
     load,
 )
 
-from pykit.p3json import (
-    JSONDecodeError,
-)
+_pyver = sys.version_info.major
+
+if _pyver == 2:
+    from pykit.p3json import (
+        JSONDecodeError,
+    )
+else:
+    from json import JSONDecodeError
 
 __all__ = [
     'dump',

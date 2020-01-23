@@ -14,7 +14,16 @@
 #
 # Thus we ported python3 json module here and have made modification in order
 # to let it pass python2 json test suites.
-from pykit import p3json
+
+import sys
+_pyver = sys.version_info.major
+
+if _pyver == 2:
+    from pykit import p3json
+else:
+    import json as p3json
+
+
 
 
 # expected behavior to dump '我':
@@ -47,6 +56,16 @@ def dump(obj, encoding='utf-8', indent=None):
     #   Thus if input is unicode and ecoding is specified, we convert unicode
     #   to a utf-8 string first.
 
+    if _pyver == 3:
+        if encoding is None:
+            ensure_ascii = True
+            s = p3json.dumps(obj, ensure_ascii=ensure_ascii, indent=indent)
+            return s.encode('utf-8')
+        else:
+            ensure_ascii = False
+            s = p3json.dumps(obj, ensure_ascii=ensure_ascii, indent=indent)
+            return s.encode(encoding)
+
     if encoding is None:
         # If do not encode, source string must be unicode.
         ensure_unicode(obj)
@@ -77,6 +96,9 @@ def load(s, encoding=None):
 
 def ensure_unicode(o):
 
+    if _pyver == 3:
+        return
+
     if isinstance(o, str):
         raise TypeError('string({o} {tp}) must be unicode'
                         ' if ensure_ascii is True'.format(o=o, tp=type(o)))
@@ -93,7 +115,7 @@ def ensure_unicode(o):
 
 def encode_unicode(o, encoding):
 
-    if isinstance(o, unicode):
+    if _pyver == 3 and isinstance(o, str) or _pyver == 2 and isinstance(o, unicode):
         return o.encode(encoding)
 
     if isinstance(o, dict):

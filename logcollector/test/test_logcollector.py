@@ -70,7 +70,7 @@ class TestLogcollector(unittest.TestCase):
         cnt = 1
         while True:
             logger.info('info')
-            logger.warn('warn')
+            logger.warning('warn')
             logger.error('error')
             time.sleep(0.001)
             cnt += 1
@@ -109,11 +109,16 @@ class TestLogcollector(unittest.TestCase):
         threadutil.start_daemon(collector.run, kwargs=kwargs)
         time.sleep(8)
 
-        dd(log_entries)
+        for ent in log_entries:
+            dd(ent)
         log_cnt = 0
         for le in log_entries:
             log_cnt += le["count"]
         dd(log_cnt)
+
+        time.sleep(2)
+
+        self.assertGreaterEqual(len(log_entries), 1, 'log_entries are: ' + repr(log_entries))
 
         self.assertEqual(100, log_cnt)
         self.assertEqual('error', log_entries[0]['level'])
@@ -124,7 +129,7 @@ class TestLogcollector(unittest.TestCase):
         log_entries = []
 
         def send_log(log_entry):
-            print log_entry
+            print(log_entry)
             log_entries.append(log_entry)
 
         kwargs = {

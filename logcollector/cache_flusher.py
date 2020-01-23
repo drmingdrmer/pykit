@@ -14,8 +14,8 @@ def enqueue_log_entry(ts_cache, queue):
     #     },
     #     ...
     # }
-    for _, source_file_cache in ts_cache.iteritems():
-        for _, log_entry in source_file_cache.iteritems():
+    for _, source_file_cache in ts_cache.items():
+        for _, log_entry in source_file_cache.items():
             queue.put(log_entry)
 
 
@@ -25,11 +25,11 @@ def flush_cache(log_cache, queue, merge):
         return
 
     if not merge:
-        for _, logs in log_cache.iteritems():
+        for _, logs in log_cache.items():
             for entry in logs:
                 queue.put(entry)
     else:
-        ts_list.sort()
+        ts_list = sorted(ts_list)
 
         # keep the latest log if it is generated in about 2 second.
         if time.time() - ts_list[-1] < 2:

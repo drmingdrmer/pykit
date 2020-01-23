@@ -1,5 +1,12 @@
+import sys
+_pyver = sys.version_info.major
+
+if _pyver == 2:
+    import Queue as pyqueue
+else:
+    import queue as pyqueue
+
 import logging
-import Queue
 import threading
 import time
 from datetime import datetime
@@ -25,7 +32,7 @@ def run(**kwargs):
         'cache': {},
         'stat': {},
 
-        'queue': Queue.Queue(1024 * 10),
+        'queue': pyqueue.Queue(1024 * 10),
     }
 
     # strptime not thread safe, need to call it manually before
