@@ -446,9 +446,12 @@ class TestHttpClient(unittest.TestCase):
     def tearDown(self):
 
         if self.http_server is not None:
+            dd("http_server: shutdown")
             self.http_server.shutdown()
+            dd("http_server: server_close")
             self.http_server.server_close()
 
+        dd("http_server: join")
         self.server_thread.join()
 
     def _start_server(self):
