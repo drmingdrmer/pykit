@@ -408,6 +408,8 @@ class TestHttpClient(unittest.TestCase):
         h.set_timeout(fail_timeout)
         try:
             h.send_request(uri, **kwargs)
+            resp = h.read_response()
+            dd(resp)
         except Exception as e:
             dd(repr(e))
             raise
