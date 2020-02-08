@@ -404,21 +404,27 @@ class TestHttpClient(unittest.TestCase):
         fail_timeout = 0.000001
         succ_timeout = 2
 
+        dd("set timeout:", fail_timeout)
         h.set_timeout(fail_timeout)
         self.assertRaises(socket.timeout, h.send_request, uri, **kwargs)
 
+        dd("set timeout:", succ_timeout)
         h.set_timeout(succ_timeout)
         h.send_request(uri, **kwargs)
 
+        dd("set timeout:", fail_timeout, "send_body")
         h.set_timeout(fail_timeout)
         self.assertRaises(socket.timeout, h.send_body, body)
 
+        dd("set timeout:", succ_timeout, "send_body")
         h.set_timeout(succ_timeout)
         h.send_body(body)
 
+        dd("set timeout:", fail_timeout, "read_response")
         h.set_timeout(fail_timeout)
         self.assertRaises(socket.timeout, h.read_response)
 
+        dd("set timeout:", succ_timeout, "full")
         h.set_timeout(succ_timeout)
         h.send_request(uri, **kwargs)
         h.send_body(body)
