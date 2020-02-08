@@ -19,47 +19,19 @@ jobs:
               # Disable them temporarily.
               # -- by xp 2020 Jan 27
 
+
               # Enable debug log: UT_DEBUG=1
               - >-
+                  sudo env "PATH=$PATH"
+                  UT_DEBUG=1
+                  PYTHONPATH="$(cd ..; pwd)"
+                  python -m unittest
+                  -c
+                  -v
+                  --failfast
+                  "pykit.http.test.test_httpclient.TestHttpClient.test_set_timeout"
                   sudo env "PATH=$PATH" ./script/run-test
                   http
-                  argchecker
-                  aws
-                  awssign
-                  cacheable
-                  cachepool
-                  cgrouparch
-                  csvutil
-                  daemonize
-                  dictutil
-                  ectypes
-                  fsutil
-                  heap
-                  httpmultipart
-                  humannum
-                  jobq
-                  jobscheduler
-                  logcollector
-                  logutil
-                  mathtoy
-                  mime
-                  modutil
-                  net
-                  p3json
-                  portlock
-                  priorityqueue
-                  proc
-                  profiling
-                  rangeset
-                  ratelimiter
-                  request
-                  shell
-                  strutil
-                  threadutil
-                  timeutil
-                  utfjson
-                  utfyaml
-                  wsjobd
 
 # after_success:
 #   - pip install python-coveralls && coveralls
