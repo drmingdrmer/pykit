@@ -406,6 +406,12 @@ class TestHttpClient(unittest.TestCase):
 
         dd("set timeout:", fail_timeout)
         h.set_timeout(fail_timeout)
+        try:
+            h.send_request(uri, **kwargs)
+        except Exception as e:
+            dd(repr(e))
+            raise
+
         self.assertRaises(socket.timeout, h.send_request, uri, **kwargs)
 
         dd("set timeout:", succ_timeout)
