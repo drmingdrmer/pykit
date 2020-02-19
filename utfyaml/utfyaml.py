@@ -39,7 +39,8 @@ def dump(s, encoding='utf-8', save_unicode=False, default_flow_style=None):
                          data: dumper.represent_scalar(tag, data))
 
     if encoding is not None:
-        dumped = yaml.dump(s, allow_unicode=True, encoding=encoding)
+        dumped = yaml.dump(s, allow_unicode=True, encoding=encoding,
+                           default_flow_style=default_flow_style)
 
     else:
         dumped = yaml.dump(s, allow_unicode=True, encoding='utf-8',
