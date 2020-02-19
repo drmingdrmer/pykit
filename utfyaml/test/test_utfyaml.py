@@ -6,6 +6,7 @@ import datetime
 
 from pykit import utfyaml
 from pykit import ututil
+import pytz
 
 dd = ututil.dd
 
@@ -58,9 +59,9 @@ class TestUtfyaml(unittest.TestCase):
             ),
 
             (
-                '2018-04-17t15:09:43.10+08:00',
+                '2018-04-17t15:09:43.10',
                 {},
-                datetime.datetime(2018, 4, 17, 7, 9, 43, 100000),
+                datetime.datetime(2018, 4, 17, 7, 9, 43, 100000, pytz.UTC),
 
                 'test load datetime object',
             ),
