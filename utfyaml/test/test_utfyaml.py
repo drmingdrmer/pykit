@@ -471,8 +471,12 @@ class TestUtfyaml(unittest.TestCase):
                     'unicode: hello, 中文\n'
                     '汉字: 我\n'
                     'bool: true\n'
-                    '? !!python/tuple [tuple, key]\n'
-                    ': !!python/tuple [tuple, value]\n'
+                    '? !!python/tuple\n'
+                    '- tuple\n'
+                    '- key\n'
+                    ': !!python/tuple\n'
+                    '- tuple\n'
+                    '- value\n'
                     'number: 1\n'
                 ),
 
@@ -492,8 +496,12 @@ class TestUtfyaml(unittest.TestCase):
                     u'unicode: hello, 中文\n'
                     u'汉字: 我\n'
                     u'bool: true\n'
-                    u'? !!python/tuple [tuple, key]\n'
-                    u': !!python/tuple [tuple, value]\n'
+                    u'? !!python/tuple\n'
+                    u'- tuple\n'
+                    u'- key\n'
+                    u': !!python/tuple\n'
+                    u'- tuple\n'
+                    u'- value\n'
                     u'number: 1\n'
                 ),
 
@@ -513,8 +521,12 @@ class TestUtfyaml(unittest.TestCase):
                     'unicode: hello, \xd6\xd0\xce\xc4\n'
                     '\xba\xba\xd7\xd6: \xce\xd2\n'
                     'bool: true\n'
-                    '? !!python/tuple [tuple, key]\n'
-                    ': !!python/tuple [tuple, value]\n'
+                    '? !!python/tuple\n'
+                    '- tuple\n'
+                    '- key\n'
+                    ': !!python/tuple\n'
+                    '- tuple\n'
+                    '- value\n'
                     'number: 1\n'
                 ),
 
@@ -534,8 +546,12 @@ class TestUtfyaml(unittest.TestCase):
                     "!!python/unicode 'unicode': !!python/unicode 'hello, 中文'\n"
                     '汉字: 我\n'
                     'bool: true\n'
-                    '? !!python/tuple [tuple, key]\n'
-                    ': !!python/tuple [tuple, value]\n'
+                    '? !!python/tuple\n'
+                    '- tuple\n'
+                    '- key\n'
+                    ': !!python/tuple\n'
+                    '- tuple\n'
+                    '- value\n'
                     'number: 1\n'
                 ),
 
@@ -556,8 +572,12 @@ class TestUtfyaml(unittest.TestCase):
                     "!!python/unicode 'unicode': !!python/unicode 'hello, \xd6\xd0\xce\xc4'\n"
                     '\xba\xba\xd7\xd6: \xce\xd2\n'
                     'bool: true\n'
-                    '? !!python/tuple [tuple, key]\n'
-                    ': !!python/tuple [tuple, value]\n'
+                    '? !!python/tuple\n'
+                    '- tuple\n'
+                    '- key\n'
+                    ': !!python/tuple\n'
+                    '- tuple\n'
+                    '- value\n'
                     'number: 1\n'
                 ),
 
