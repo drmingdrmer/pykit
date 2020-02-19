@@ -24,7 +24,7 @@ def load(s, encoding='utf-8'):
     return yaml.load(s)
 
 
-def dump(s, encoding='utf-8', save_unicode=False):
+def dump(s, encoding='utf-8', save_unicode=False, default_flow_style=None):
 
     yaml.add_representer(str, represent_str)
     yaml.add_representer(dict, represent_mapping)
@@ -42,7 +42,8 @@ def dump(s, encoding='utf-8', save_unicode=False):
         dumped = yaml.dump(s, allow_unicode=True, encoding=encoding)
 
     else:
-        dumped = yaml.dump(s, allow_unicode=True, encoding='utf-8')
+        dumped = yaml.dump(s, allow_unicode=True, encoding='utf-8',
+                           default_flow_style=default_flow_style)
         # unify encoding
         dumped = unicode(dumped, 'utf-8')
 
