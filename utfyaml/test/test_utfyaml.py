@@ -502,7 +502,9 @@ class TestUtfyaml(unittest.TestCase):
                 },
                 (
                     '0: number key\n'
-                    'China: {Captial: \xb1\xb1\xbe\xa9, Language: \xc6\xd5\xcd\xa8\xbb\xb0}\n'
+                    'China:\n'
+                    '  Captial: \xb1\xb1\xbe\xa9\n'
+                    '  Language: \xc6\xd5\xcd\xa8\xbb\xb0\n'
                     'string: hello\n'
                     'unicode: hello, \xd6\xd0\xce\xc4\n'
                     '\xba\xba\xd7\xd6: \xce\xd2\n'
@@ -521,7 +523,9 @@ class TestUtfyaml(unittest.TestCase):
                 },
                 (
                     '0: number key\n'
-                    'China: {Captial: 北京, Language: 普通话}\n'
+                    'China:\n'
+                    '  Captial: 北京\n'
+                    '  Language: 普通话\n'
                     'string: hello\n'
                     "!!python/unicode 'unicode': !!python/unicode 'hello, 中文'\n"
                     '汉字: 我\n'
@@ -541,7 +545,9 @@ class TestUtfyaml(unittest.TestCase):
                 },
                 (
                     '0: number key\n'
-                    'China: {Captial: \xb1\xb1\xbe\xa9, Language: \xc6\xd5\xcd\xa8\xbb\xb0}\n'
+                    'China:\n'
+                    '  Captial: \xb1\xb1\xbe\xa9\n'
+                    '  Language: \xc6\xd5\xcd\xa8\xbb\xb0\n'
                     'string: hello\n'
                     "!!python/unicode 'unicode': !!python/unicode 'hello, \xd6\xd0\xce\xc4'\n"
                     '\xba\xba\xd7\xd6: \xce\xd2\n'
@@ -557,7 +563,12 @@ class TestUtfyaml(unittest.TestCase):
 
         for kwargs, expected, msg in cases:
 
-            self._test_yaml(utfyaml.dump, src, expected, msg, **kwargs)
+            dd('msg: ', msg)
+            dd('expected: ', expected)
+            rst = utfyaml.dump(src, default_flow_style=True, **kwargs)
+            dd('result  : ', rst)
+            self.assertEqual(expected, rst, msg)
+
 
 
     def _test_yaml(self, _exec, src, expected, msg, **kwargs):
