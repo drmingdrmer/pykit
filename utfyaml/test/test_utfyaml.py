@@ -433,7 +433,11 @@ class TestUtfyaml(unittest.TestCase):
 
         for src, kwargs, expected, msg in cases:
 
-            self._test_yaml(utfyaml.dump, src, expected, msg, **kwargs)
+            dd('msg: ', msg)
+            dd('expected: ', expected)
+            rst = utfyaml.dump(src, **kwargs)
+            dd('result  : ', rst)
+            self.assertEqual(expected, rst, msg)
 
 
     def test_dump_dict(self):
@@ -560,9 +564,7 @@ class TestUtfyaml(unittest.TestCase):
 
             dd('msg: ', msg)
             dd('expected: ', expected)
-
-            rst = _exec(src, **kwargs)
-
             dd('result  : ', rst)
 
+            rst = _exec(src, **kwargs)
             self.assertEqual(expected, rst)
