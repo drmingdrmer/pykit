@@ -464,7 +464,9 @@ class TestUtfyaml(unittest.TestCase):
                 {},
                 (
                     '0: number key\n'
-                    'China: {Captial: 北京, Language: 普通话}\n'
+                    'China:\n'
+                    '  Captial: 北京\n'
+                    '  Language: 普通话\n'
                     'string: hello\n'
                     'unicode: hello, 中文\n'
                     '汉字: 我\n'
@@ -483,7 +485,9 @@ class TestUtfyaml(unittest.TestCase):
                 },
                 (
                     u'0: number key\n'
-                    u'China: {Captial: 北京, Language: 普通话}\n'
+                    u'China:\n'
+                    u'  Captial: 北京\n'
+                    u'  Language: 普通话\n'
                     u'string: hello\n'
                     u'unicode: hello, 中文\n'
                     u'汉字: 我\n'
