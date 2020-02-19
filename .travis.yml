@@ -23,6 +23,7 @@ jobs:
               - >-
                   sudo env "PATH=$PATH" ./script/run-test
                   utfyaml.test.test_utfyaml.TestUtfyaml.test_dump_list
+                  utfyaml.test.test_utfyaml.TestUtfyaml.test_dump_dict
 
 # after_success:
 #   - pip install python-coveralls && coveralls
