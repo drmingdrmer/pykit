@@ -384,7 +384,7 @@ class TestUtfyaml(unittest.TestCase):
             (
                 ['猫', 'mouse', '狗'],
                 {},
-                '- 猫\n - mouse\n - 狗\n',
+                '- 猫\n- mouse\n- 狗\n',
 
                 'test normal dump list',
             ),
@@ -394,7 +394,7 @@ class TestUtfyaml(unittest.TestCase):
                 {
                     'encoding': None,
                 },
-                u'- 猫\n - mouse\n - 狗\n',
+                u'- 猫\n- mouse\n- 狗\n',
 
                 'test output with unicode',
             ),
@@ -404,7 +404,7 @@ class TestUtfyaml(unittest.TestCase):
                 {
                     'encoding': 'GBK',
                 },
-                '- \xc3\xa8\n, - mouse\n, - \xb9\xb7\n',
+                '- \xc3\xa8\n,- mouse\n, -\xb9\xb7\n',
 
                 'test output with GBK',
             ),
