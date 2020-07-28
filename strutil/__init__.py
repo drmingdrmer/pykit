@@ -13,27 +13,6 @@ from .strutil import (
     utf8str,
 )
 
-from .colored_string import (
-    ColoredString,
-    colorize,
-
-    blue,
-    cyan,
-    green,
-    purple,
-    red,
-    white,
-    yellow,
-
-    optimal,
-    normal,
-    loaded,
-    warn,
-    danger,
-
-    fading_color,
-)
-
 from .hex import (
     Hex
 )
@@ -52,25 +31,6 @@ __all__ = [
     'parse_colon_kvs',
     'tokenize',
     'break_line',
-
-    'ColoredString',
-    'colorize',
-
-    'blue',
-    'cyan',
-    'green',
-    'purple',
-    'red',
-    'white',
-    'yellow',
-
-    'optimal',
-    'normal',
-    'loaded',
-    'warn',
-    'danger',
-
-    'fading_color',
 
     'Hex',
 

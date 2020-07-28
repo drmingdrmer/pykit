@@ -5,13 +5,7 @@
 - [Name](#name)
 - [Status](#status)
 - [Synopsis](#synopsis)
-  - [colored string](#colored-string)
-  - [colored command prompt](#colored-command-prompt)
 - [Classes](#classes)
-  - [strutil.ColoredString](#strutilcoloredstring)
-    - [ColoredString.join](#coloredstringjoin)
-    - [ColoredString.split](#coloredstringsplit)
-    - [ColoredString.splitlines](#coloredstringsplitlines)
   - [strutil.TrieNode](#strutiltrienode)
     - [TrieNode.n](#trienoden)
     - [TrieNode.char](#trienodechar)
@@ -88,79 +82,8 @@ strutil.format_line(items, sep=' | ', aligns = 'llllll')
 #          |              |      |    |             | 2010 other
 ```
 
-## colored string
-
-```python
-from pykit.strutil import blue
-from pykit.strutil import green
-blue("blue") + " and " + green("green")
-```
-
-The above snippet will output colored text on a terminal:
-
-![](res/colored-string.png)
-
-## colored command prompt
-
-If you are going to use colored string as terminal prompt,
-the terminal prompt is not wrapping correctly with very long commands.
-You'd better tell **ColoredString** that is a prompt color string.
-
-```python
-from pykit.strutil import ColoredString
-prompt = ColoredString('colored prompt# ', color='red', prompt=True)
-```
-
-Those screenshots show this issue, the cursor is box.
-
-`prompt=False` long command:
-
-![](res/colored-false-prompt.png)
-
-`prompt=False` long command after **Home Key**:
-
-![](res/colored-false-prompt-home-key.png)
-
-`prompt=False` long command after **End Key**:
-
-![](res/colored-false-prompt-end-key.png)
-
-`prompt=True` long command:
-
-![](res/colored-true-prompt.png)
-
-`prompt=True` long command after **Home Key**:
-
-![](res/colored-true-prompt-home-key.png)
-
-`prompt=True` long command after **End Key**:
-
-![](res/colored-true-prompt-end-key.png)
-
 #   Classes
 
-## strutil.ColoredString
-
-**syntax**:
-`strutil.ColoredString(normal_string, color=None, prompt=True)`
-
-It provides the colored string in terminal on Unix.
-
-**arguments**:
-
--   `normal_string`:
-    the string to colour.
-
--   `color`:
-    the color of **normal_string**,
-    named color are:
-    `blue` `cyan` `green` `purple` `red` `white` `yellow`
-    `optimal` `normal` `loaded` `warn` `danger`,
-
-    you can colour string with integer [0-256].
-
-**return**:
-An instance of strutil.ColoredString.
 
 ### ColoredString.join
 
