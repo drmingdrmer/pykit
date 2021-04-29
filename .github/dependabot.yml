@@ -1,0 +1,19 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "21:00"
+  open-pull-requests-limit: 10
+  target-branch: master
+  ignore:
+  - dependency-name: numpy
+    versions:
+    - "> 1.16.3, < 2"
+  - dependency-name: numpy
+    versions:
+    - ">= 1.18.a, < 1.19"
+  - dependency-name: pytz
+    versions:
+    - "2020.5"
