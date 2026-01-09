@@ -65,3 +65,4 @@ gevent-websocket==0.10.1
 
 # msgpack
 msgpack==1.0.0
+urllib3>=2.6.3 # not directly required, pinned by Snyk to avoid a vulnerability
